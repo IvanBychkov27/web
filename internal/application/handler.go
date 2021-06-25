@@ -13,8 +13,8 @@ func (app *Application) homePage(rw http.ResponseWriter, _ *http.Request) {
 		app.logger.Error(err.Error())
 		return
 	}
-
-	err = tmpl.ExecuteTemplate(rw, "index", app.imag("internal/picture/gofer.jpg"))
+	data := app.imag("internal/picture/gofer.jpg")
+	err = tmpl.ExecuteTemplate(rw, "index", data)
 	if err != nil {
 		app.logger.Error(err.Error())
 	}
