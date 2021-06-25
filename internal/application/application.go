@@ -23,6 +23,8 @@ func New(logger *zap.Logger, cfg *config.Config) *Application {
 
 	router := http.NewServeMux()
 	router.HandleFunc("/", app.handler)
+	router.HandleFunc("/contacts/", app.contactsPage)
+	router.HandleFunc("/dopinfo/", app.dopInfoPage)
 
 	app.server = &http.Server{}
 	app.server.Handler = router

@@ -1,10 +1,11 @@
 package application
 
 import (
+	"html/template"
 	"net/http"
-	"time"
 )
 
 func (app *Application) handler(rw http.ResponseWriter, _ *http.Request) {
-	rw.Write([]byte("start:  " + time.Now().Format("02-01-2006 15:04:05")))
+	tmpl, _ := template.ParseFiles("internal/pages/home_page.html")
+	tmpl.Execute(rw, nil)
 }
