@@ -22,6 +22,7 @@ func New(logger *zap.Logger, cfg *config.Config) *Application {
 	}
 
 	router := http.NewServeMux()
+	//router.Handle("/static/", http.StripPrefix("/static", http.FileServer(http.Dir("./static/"))))
 	router.HandleFunc("/", app.homePage)                // главная страница
 	router.HandleFunc("/contacts/", app.contactsPage)   // страница контактов
 	router.HandleFunc("/different/", app.differentPage) // разное

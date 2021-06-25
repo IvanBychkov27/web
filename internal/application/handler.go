@@ -8,8 +8,16 @@ import (
 )
 
 func (app *Application) homePage(rw http.ResponseWriter, _ *http.Request) {
-	tmpl, _ := template.ParseFiles("internal/pages/home_page.html")
-	tmpl.Execute(rw, app.imag("internal/picture/gofer.jpg"))
+	tmpl, err := template.ParseFiles("internal/pages/index.html", "internal/pages/header.html", "internal/pages/footer.html")
+	if err != nil {
+		app.logger.Error(err.Error())
+		return
+	}
+
+	err = tmpl.ExecuteTemplate(rw, "index", app.imag("internal/picture/gofer.jpg"))
+	if err != nil {
+		app.logger.Error(err.Error())
+	}
 }
 
 // открываем картинку и преобразовываем в строку для web страницы
