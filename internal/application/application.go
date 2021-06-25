@@ -22,9 +22,9 @@ func New(logger *zap.Logger, cfg *config.Config) *Application {
 	}
 
 	router := http.NewServeMux()
-	router.HandleFunc("/", app.handler)
-	router.HandleFunc("/contacts/", app.contactsPage)
-	router.HandleFunc("/different/", app.differentPage)
+	router.HandleFunc("/", app.homePage)                // главная страница
+	router.HandleFunc("/contacts/", app.contactsPage)   // страница контактов
+	router.HandleFunc("/different/", app.differentPage) // разное
 
 	app.server = &http.Server{}
 	app.server.Handler = router
@@ -43,18 +43,18 @@ func (app *Application) run(ln net.Listener, cancel context.CancelFunc, wg *sync
 	defer wg.Done()
 	defer cancel()
 
-	app.logger.Info("start server tsw listen", zap.String("address", ln.Addr().String()))
+	app.logger.Info("start server web listen", zap.String("address", ln.Addr().String()))
 
 	err := app.server.Serve(ln)
 	if err != nil && err.Error() != "http: Server closed" {
-		app.logger.Error("error serve tsw", zap.Error(err))
+		app.logger.Error("error serve web", zap.Error(err))
 	}
 }
 
 func (app *Application) Stop() {
-	app.logger.Info("stop server tsw...")
+	app.logger.Info("stop server web...")
 	err := app.server.Shutdown(context.Background())
 	if err != nil {
-		app.logger.Error("error stop server tsw", zap.Error(err))
+		app.logger.Error("error stop server web", zap.Error(err))
 	}
 }
