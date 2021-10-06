@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	_ "github.com/heroku/x/hmetrics/onload"
 	"github.com/ivanbychkov27/web/internal/application"
 	"github.com/ivanbychkov27/web/internal/config"
 	"go.uber.org/zap"
